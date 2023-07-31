@@ -28,17 +28,17 @@ def gpt4():
         # rebuild storage context
 
         storage_context = StorageContext.from_defaults(persist_dir="./storage")
-        llm_predictor = LLMPredictor(llm=OpenAI(temperature=1, model_name="text-davinci-002"))
+        llm_predictor = LLMPredictor(llm=OpenAI(temperature=0.8, model_name="text-davinci-003"))
         service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
         # load index
         index = load_index_from_storage(storage_context,service_context=service_context)
         query_engine = index.as_query_engine()
-        response = query_engine.query("Select up to 3 quizzes from the document that you think I would like to take based on this input:" + user_input + ". Only choose links in the provided document. Return the quizzes as a list of URLs.")
+        response = query_engine.query("Search all documents for an answer to my question. Don't refer me to a page in any of the documents. Instead give me all the info I need to answer question so I don't need to look at the documents myself. Question: " + user_input)
         content = str(response)
-        if "document" in content or "input" in content or "[]" in content:
-            #content = "Oh no, you stumped me! I couldn't find any relevant quizzes. Perhaps try again?"
-            response = query_engine.query("Select 3 random quizzes from the document and return them to me as a list of URLs.")
-            content = str(response)
+        print(response.source_nodes)
+        print(response.get_formatted_sources())
+        if "in the context information" in content:
+            content = "I couldn't find an answer to this question. Please rephrase it. Make sure you include the make & model of the product you are using."
     except RateLimitError:
         content = "The server is experiencing a high volume of requests. Please try again later."
 

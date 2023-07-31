@@ -72,8 +72,8 @@
 <body>
 <div class="chat-container">
     <img src="/static/wikiHow%20Circle%20Logo.png" style="width:100px;margin:auto;display:block" alt="wikiHow Logo">
-    <h1>wikiHow Quiz Librarian</h1>
-    <p>We have a quiz for every occasion! Don't believe us? Just enter what's on your mind and the wikiHow Quiz Librarian will hand-pick some quizzes just for you.</p>
+    <h1>wikiHow Manual Bot</h1>
+    <p style="text-align:center">I read user manuals so you don't have to.</p>
     <form id="chat-form">
         <input
                 type="text"
@@ -84,17 +84,35 @@
         <button type="submit" id="submitBtn">Send</button>
     </form>
     <div id="result"></div>
+    <div>
+        <p style="text-align:center"><b>Supported Manuals</b></p>
+        <ul>
+            <li>21 in. Recycler Briggs and Stratton Lawn Mower with Bagger</li>
+            <li>Ryobi Lawnmower40V HP Brushless 20 in. Cordless Battery</li>
+            <li>21in. 140cc Briggs & Stratton Gas Push Lawn Mower with Rear bag</li>
+            <li>Manual Gardena Battery Rechargeable Lawnmower</li>
+            <li>Bosch Dishwasher</li>
+            <li>Miele Dishwasher</li>
+            <li>Whirlpool Dishwasher</li>
+            <li>LG ThinQ 5 Cu. Ft. Top Load Washer in Middle Black</li>
+            <li>Electrolux Washer and Dryer</li>
+            <li>Samsung Washer</li>
+            <li>Vitamix 5200 Blender, Professional-Grade, Container, Black, Self-Cleaning</li>
+            <li>Oster Versa Professional Power Blender | 1400 Watts</li>
+            <li>Brother MFCL2750DW Monochrome All-in-One Wireless Laser Printer</li>
+        </ul>
+    </div>
 </div>
+
 
 <script>
       window.onload = function () {
         document
-          .getElementById("chat-form")
           .addEventListener("submit", function (event) {
             // Prevent the form from submitting and refreshing the page
             event.preventDefault();
             let resultDiv = document.getElementById("result");
-            resultDiv.innerHTML = "Ah, very interesting! Just a moment. Let me search my quiz library...";
+            resultDiv.innerHTML = "Searching manual database...";
 
             let userInput = document.getElementById("user-input").value;
             let url = `/gpt3?user_input=${encodeURIComponent(userInput)}`;
