@@ -28,13 +28,14 @@ def gpt4():
         # rebuild storage context
 
         storage_context = StorageContext.from_defaults(persist_dir="./storage")
-        llm_predictor = LLMPredictor(llm=OpenAI(temperature=0.8, model_name="text-davinci-003"))
+        llm_predictor = LLMPredictor(llm=OpenAI(temperature=0.8, model_name="text-davinci-003",openai_api_key="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"))
         service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
         # load index
         index = load_index_from_storage(storage_context,service_context=service_context)
         query_engine = index.as_query_engine()
-        response = query_engine.query("Search all documents for an answer to my question. Don't refer me to a page in any of the documents. Instead give me all the info I need to answer question so I don't need to look at the documents myself. Question: " + user_input)
+        response = query_engine.query("Search all documents for an answer to my question. After you provide an answer to the question, tell me what page of the manual I can find more info on. Answer the question first, then provide the page. Question: " + user_input)
         content = str(response)
+        content = content + " Access the manual here: www.wikihow.com/manuals/ABCXYZ"
         print(response.source_nodes)
         print(response.get_formatted_sources())
         if "in the context information" in content:
