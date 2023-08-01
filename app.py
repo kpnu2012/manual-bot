@@ -28,7 +28,7 @@ def gpt4():
         # rebuild storage context
 
         storage_context = StorageContext.from_defaults(persist_dir="./storage")
-        llm_predictor = LLMPredictor(llm=OpenAI(temperature=0.8, model_name="text-davinci-003",openai_api_key="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"))
+        llm_predictor = LLMPredictor(llm=OpenAI(temperature=0.8, model_name="text-davinci-003"))
         service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
         # load index
         index = load_index_from_storage(storage_context,service_context=service_context)
